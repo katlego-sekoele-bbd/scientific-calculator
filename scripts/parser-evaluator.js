@@ -99,9 +99,36 @@ export function infixToPostfix(tokens) {
     return outputStack;
 }
 
-export function evaluate(postfixExpression) {
-    const tokens = tokenize(expression);
-
-    for (const token of tokens) {
+function popN(array, n) {
+    const popped = [];
+    for (let i = 0; i < n; i++) {
+        popped.push(array.pop());
     }
+    return popped;
+}
+
+export function evaluatePostfixTokenExpression(postfixExpression) {
+    const outputStack = [];
+    let expectedOperands = 0;
+    for (const token of postfixExpression) {
+        if (token.type === TOKEN_TYPES.operand) {
+            outputStack.push(token);
+        } else if (typeof token === 'number') {
+            expectedOperands = token;
+        } else {
+            // assume that this is an operator
+            if (
+                (expectedOperands && expectedOperands === token.numOperands) ||
+                !expectedOperands
+            ) {
+                const operandTokens = popN(outputStack, token.numOperands);
+                const operands = operandTokens.map((token) => token.value);
+                const result = token.applyOperator(
+                    operandTokens.map((token) => token.value)
+                );
+                outputStack.push(new Token(TOKEN_DETAILS.number, result));
+            }
+        }
+    }
+    return outputStack;
 }

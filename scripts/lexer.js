@@ -18,47 +18,71 @@ export const TOKEN_DETAILS = {
     '+': {
         representation: '+',
         precedence: 9,
+        numOperands: 2,
         type: TOKEN_TYPES.leftAssociativeBinaryOperator,
+        applyOperator: (operands) => operands[0] + operands[1],
     },
     '-': {
         representation: '-',
         precedence: 9,
+        numOperands: 2,
         type: TOKEN_TYPES.leftAssociativeBinaryOperator,
+        applyOperator: (operands) => operands[0] - operands[1],
     },
     '/': {
         representation: '/',
         precedence: 10,
+        numOperands: 2,
         type: TOKEN_TYPES.leftAssociativeBinaryOperator,
+        applyOperator: (operands) => operands[0] / operands[1],
     },
     '*': {
         representation: '*',
         precedence: 10,
+        numOperands: 2,
         type: TOKEN_TYPES.leftAssociativeBinaryOperator,
+        applyOperator: (operands) => operands[0] * operands[1],
     },
     '^': {
         representation: '^',
         precedence: 12,
+        numOperands: 2,
         type: TOKEN_TYPES.rightAssociativeBinaryOperator,
+        applyOperator: (operands) => operands[0] ** operands[1],
     },
     '---': {
         representation: '---',
         precedence: 11,
+        numOperands: 1,
         type: TOKEN_TYPES.prefixUnaryOperator,
+        applyOperator: (operands) => -operands[0],
     },
     '+++': {
         representation: '+++',
         precedence: 11,
+        numOperands: 1,
         type: TOKEN_TYPES.prefixUnaryOperator,
+        applyOperator: (operands) => +operands[0],
     },
     '%': {
         representation: '%',
         precedence: 10,
+        numOperands: 1,
         type: TOKEN_TYPES.postfixUnaryOperator,
+        applyOperator: (operands) => operands[0] / 100,
     },
     '!': {
         representation: '!',
         precedence: 11,
+        numOperands: 1,
         type: TOKEN_TYPES.postfixUnaryOperator,
+        applyOperator: (operands) => {
+            let value = 1;
+            for (let i = operands[0]; i > 0; i++) {
+                value *= i;
+            }
+            return value;
+        },
     },
     number: {
         representation: 'NUMBER',
@@ -78,68 +102,80 @@ export const TOKEN_DETAILS = {
     sin: {
         representation: 'sin',
         precedence: 13,
-        n_operands: 1,
+        numOperands: 1,
         type: TOKEN_TYPES.function,
+        applyOperator: (operands) => Math.sin(operands[0]),
     },
     cos: {
         representation: 'cos',
         precedence: 13,
-        n_operands: 1,
+        numOperands: 1,
         type: TOKEN_TYPES.function,
+        applyOperator: (operands) => Math.cos(operands[0]),
     },
     tan: {
         representation: 'tan',
         precedence: 13,
-        n_operands: 1,
+        numOperands: 1,
         type: TOKEN_TYPES.function,
+        applyOperator: (operands) => Math.tan(operands[0]),
     },
     sec: {
         representation: 'sec',
         precedence: 13,
-        n_operands: 1,
+        numOperands: 1,
         type: TOKEN_TYPES.function,
+        applyOperator: (operands) => Math.sec(operands[0]),
     },
     cosec: {
         representation: 'cosec',
         precedence: 13,
-        n_operands: 1,
+        numOperands: 1,
         type: TOKEN_TYPES.function,
+        applyOperator: (operands) => Math.cosec(operands[0]),
     },
     cot: {
         representation: 'cot',
         precedence: 13,
-        n_operands: 1,
+        numOperands: 1,
         type: TOKEN_TYPES.function,
+        applyOperator: (operands) => Math.cot(operands[0]),
     },
     abs: {
         representation: 'abs',
         precedence: 13,
-        n_operands: 1,
+        numOperands: 1,
         type: TOKEN_TYPES.function,
+        applyOperator: (operands) => Math.abs(operands[0]),
     },
     log: {
         representation: 'log',
         precedence: 13,
-        n_operands: 2,
+        numOperands: 2,
         type: TOKEN_TYPES.function,
+        applyOperator: (operands) =>
+            Math.log(operands[0]) / Math.log(operands[1]),
     },
     ln: {
         representation: 'ln',
         precedence: 13,
-        n_operands: 1,
+        numOperands: 1,
         type: TOKEN_TYPES.function,
+        applyOperator: (operands) => Math.ln(operands[0]),
     },
     sqrt: {
         representation: 'sqrt',
         precedence: 13,
-        n_operands: 1,
+        numOperands: 1,
         type: TOKEN_TYPES.function,
+        applyOperator: (operands) => Math.sqrt(operands[0]),
     },
     cbrt: {
         representation: 'cbrt',
         precedence: 13,
-        n_operands: 1,
+        numOperands: 1,
         type: TOKEN_TYPES.function,
+        applyOperator: (operands) => Math.cbrt(operands[0]),
     },
 };
 
