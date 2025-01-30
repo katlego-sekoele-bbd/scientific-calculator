@@ -3,17 +3,19 @@ body {
     height: 100lvh;
     background-color: #000000;
     color: #ffffff;
-
+    overflow: hidden;
 }
 
 
 
 #calculator {
-    height: 100%;
+    height: 99lvh;
+    max-height: 99lvh;
+    width: 99lvw;
+    max-width: 99lvw;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    height: 100%;
 }
 
 .screen {
@@ -124,6 +126,10 @@ body {
 @media only screen and (max-width: 768px) {
     .btn {
         font-size: 1rem;
+    }
+
+    .screen {
+        font-size: 4rem;
     }
 }
 
