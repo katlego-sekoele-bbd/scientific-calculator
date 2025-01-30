@@ -11,8 +11,8 @@ body {
 #calculator {
     height: 99lvh;
     max-height: 99lvh;
-    width: 99lvw;
-    max-width: 99lvw;
+    width: 99vw;
+    max-width: 99vw;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
