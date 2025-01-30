@@ -127,8 +127,8 @@ export const TOKEN_DETAILS = {
         type: TOKEN_TYPES.function,
         applyOperator: (operands) => 1 / Math.cos(operands[0]),
     },
-    cosec: {
-        representation: 'cosec',
+    csc: {
+        representation: 'csc',
         precedence: 13,
         numOperands: 1,
         type: TOKEN_TYPES.function,
@@ -216,7 +216,7 @@ export function preValidate(expression) {
 
 function bracketsAreBalanced(expression) {
     const stack = [];
-    const characterArray = expression.split();
+    const characterArray = expression.split('');
     for (let character of characterArray) {
         if (character === '(') {
             stack.push(character);
@@ -225,7 +225,6 @@ function bracketsAreBalanced(expression) {
             if (!value) return false;
         }
     }
-
     if (stack.length > 0) return false;
     else return true;
 }

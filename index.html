@@ -4,14 +4,94 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Scientific Calculator</title>
+        <link rel="stylesheet" href="styles/main.css" />
         <script type="module" src="scripts/lexer.js"></script>
         <script type="module" src="scripts/parser-evaluator.js"></script>
+        <script type="module" src="scripts/ui-event-listeners.js"></script>
         <script type="module" src="scripts/main.js"></script>
     </head>
     <body>
-        <h1>Scientific Calculator</h1>
-        <input id="expression-input" />
-        <button id="equals-button">=</button>
-        <p id="output-paragraph"></p>
+        <main id="calculator">
+            <textarea id="screen" class="screen" type="text"></textarea>
+            <div id="error-screen" class="screen error-screen"></div>
+            <div id="buttons-container">
+                <div id="functionpad">
+                    <button id="lparen-btn" class="btn fn-btn dark-grey">
+                        (
+                    </button>
+                    <button id="rparen-btn" class="btn fn-btn dark-grey">
+                        )
+                    </button>
+                    <button id="pow-btn" class="btn fn-btn dark-grey">^</button>
+                    <button id="fact-btn" class="btn fn-btn dark-grey">
+                        !
+                    </button>
+
+                    <button id="abs-btn" class="btn fn-btn dark-grey">
+                        abs(
+                    </button>
+                    <button id="sin-btn" class="btn fn-btn dark-grey">
+                        sin(
+                    </button>
+                    <button id="cos-btn" class="btn fn-btn dark-grey">
+                        cos(
+                    </button>
+                    <button id="tan-btn" class="btn fn-btn dark-grey">
+                        tan(
+                    </button>
+
+                    <button id="log-btn" class="btn fn-btn dark-grey">
+                        log(
+                    </button>
+                    <button id="sec-btn" class="btn fn-btn dark-grey">
+                        sec(
+                    </button>
+                    <button id="csc-btn" class="btn fn-btn dark-grey">
+                        csc(
+                    </button>
+                    <button id="cot-btn" class="btn fn-btn dark-grey">
+                        cot(
+                    </button>
+
+                    <button id="ln-btn" class="btn fn-btn dark-grey">
+                        ln(
+                    </button>
+                    <button id="sqrt-btn" class="btn fn-btn dark-grey">
+                        √(
+                    </button>
+                    <button id="cbrt-btn" class="btn fn-btn dark-grey">
+                        ³√(
+                    </button>
+                </div>
+                <div id="numpad">
+                    <button id="ac-btn" class="btn light-grey">
+                        <img
+                            src="assets/backspace.svg"
+                            alt="backspace button"
+                            style="filter: invert()"
+                        />
+                    </button>
+                    <button id="comma-btn" class="btn light-grey">,</button>
+                    <button id="percent-btn" class="btn light-grey">%</button>
+                    <button id="divide-btn" class="btn yellow">÷</button>
+                    <button id="seven-btn" class="btn medium-grey">7</button>
+                    <button id="eight-btn" class="btn medium-grey">8</button>
+                    <button id="nine-btn" class="btn medium-grey">9</button>
+                    <button id="times-btn" class="btn yellow">×</button>
+                    <button id="four-btn" class="btn medium-grey">4</button>
+                    <button id="five-btn" class="btn medium-grey">5</button>
+                    <button id="six-btn" class="btn medium-grey">6</button>
+                    <button id="minus-btn" class="btn yellow">-</button>
+                    <button id="one-btn" class="btn medium-grey">1</button>
+                    <button id="two-btn" class="btn medium-grey">2</button>
+                    <button id="three-btn" class="btn medium-grey">3</button>
+                    <button id="plus-btn" class="btn yellow">+</button>
+                    <button id="function-btn" class="btn medium-grey">_</button>
+                    <button id="zero-btn" class="btn medium-grey">0</button>
+                    <button id="decimal-btn" class="btn medium-grey">.</button>
+                    <button id="equals-btn" class="btn yellow">=</button>
+                </div>
+            </div>
+        </main>
     </body>
 </html>

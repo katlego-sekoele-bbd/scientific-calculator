@@ -4,7 +4,11 @@ import {
     infixToPostfix,
 } from './parser-evaluator.js';
 
+import { addEventListeners } from './ui-event-listeners.js';
+
 document.addEventListener('DOMContentLoaded', (event) => {
+    addEventListeners();
+
     let expressions = ['3 + 5', '10 - 4', '6 * 7', '20 / 5', '2 ^ 3']; // passed
     expressions = ['---5', '+++5', '50%']; // passed
     expressions = ['5!', '3!', '0!']; // passed

@@ -1,0 +1,128 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    height: 100lvh;
+    background-color: #000000;
+    color: #ffffff;
+
+}
+
+
+
+#calculator {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 100%;
+}
+
+.screen {
+    width: 100%;
+    height: calc(20% - 1rem);
+    text-align: end;
+    vertical-align: bottom;
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+    color: #ffffff;
+    font-size: 5rem;
+    overflow: auto;
+    resize: none;
+}
+
+.error-screen {
+    display: none;
+    color: red;
+}
+
+.screen:focus {
+    border: none;
+    outline-width: 0;
+}
+
+#buttons-container {
+    display: flex;
+    flex-wrap: wrap;
+    height: calc(60% - 1rem);
+
+    align-items: flex-end;
+    align-content: flex-end;
+}
+
+#numpad {
+    height: calc(100% - 1rem);
+    width: 50%;
+    display: grid;
+    grid-template-columns: repeat(4, 25%);
+    grid-template-rows: repeat(5, 20%);
+    justify-items: center;
+    align-items: center;
+}
+
+#functionpad {
+    height: calc(100% - 1rem);
+    width: 50%;
+    display: grid;
+    grid-template-columns: repeat(5, 20%);
+    grid-template-rows: repeat(3, 33%);
+    justify-items: center;
+    align-items: center;
+}
+
+.btn {
+    color: #ffffff;
+    width: 90%;
+    height: 90%;
+    border-radius: 4rem;
+    font-size: 2rem;
+    border: none;
+    word-break: break-all;
+}
+
+.fn-btn {}
+
+.btn:active {
+    filter: brightness(1.75);
+    transition: filter 0.2s ease;
+}
+
+.yellow {
+    background-color: #fe940d;
+}
+
+.light-grey {
+    background-color: #515154;
+}
+
+.medium-grey {
+    background-color: #242426;
+}
+
+.dark-grey {
+    background-color: #242426;
+}
+
+@media only screen and (max-width: 1024px) {
+    .screen {
+        height: 20%;
+    }
+
+    #buttons-container {
+        height: calc(80% - 1rem);
+    }
+
+    #numpad {
+        height: calc(50% - 1rem);
+        width: 100%;
+    }
+
+    #functionpad {
+        height: calc(30% - 1rem);
+        width: 100%;
+    }
+}
+
+@media only screen and (max-width: 300px) {
+    .btn {
+        font-size: 1rem;
+    }
+}
