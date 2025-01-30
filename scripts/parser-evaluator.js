@@ -1,5 +1,9 @@
 import { Token, TOKEN_DETAILS, TOKEN_TYPES, tokenize } from './lexer.js';
 
+/**
+ * Algorithms credit -> http://www.neocomputer.org/projects/lang/infix.html
+ */
+
 function handleBinaryOperator(
     operatorStack,
     outputStack,
@@ -127,8 +131,9 @@ export function evaluatePostfixTokenExpression(postfixExpression) {
                     operandTokens.map((token) => token.value)
                 );
                 outputStack.push(new Token(TOKEN_DETAILS.number, result));
+                expectedOperands = 0;
             }
         }
     }
-    return outputStack;
+    return outputStack[0];
 }

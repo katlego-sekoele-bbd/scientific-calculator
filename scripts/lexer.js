@@ -27,14 +27,14 @@ export const TOKEN_DETAILS = {
         precedence: 9,
         numOperands: 2,
         type: TOKEN_TYPES.leftAssociativeBinaryOperator,
-        applyOperator: (operands) => operands[0] - operands[1],
+        applyOperator: (operands) => operands[1] - operands[0],
     },
     '/': {
         representation: '/',
         precedence: 10,
         numOperands: 2,
         type: TOKEN_TYPES.leftAssociativeBinaryOperator,
-        applyOperator: (operands) => operands[0] / operands[1],
+        applyOperator: (operands) => operands[1] / operands[0],
     },
     '*': {
         representation: '*',
@@ -78,7 +78,7 @@ export const TOKEN_DETAILS = {
         type: TOKEN_TYPES.postfixUnaryOperator,
         applyOperator: (operands) => {
             let value = 1;
-            for (let i = operands[0]; i > 0; i++) {
+            for (let i = operands[0]; i > 0; i--) {
                 value *= i;
             }
             return value;
@@ -125,21 +125,22 @@ export const TOKEN_DETAILS = {
         precedence: 13,
         numOperands: 1,
         type: TOKEN_TYPES.function,
-        applyOperator: (operands) => Math.sec(operands[0]),
+        applyOperator: (operands) => 1 / Math.cos(operands[0]),
     },
     cosec: {
         representation: 'cosec',
         precedence: 13,
         numOperands: 1,
         type: TOKEN_TYPES.function,
-        applyOperator: (operands) => Math.cosec(operands[0]),
+        applyOperator: (operands) => 1 / Math.sin(operands[0]),
     },
     cot: {
         representation: 'cot',
         precedence: 13,
         numOperands: 1,
         type: TOKEN_TYPES.function,
-        applyOperator: (operands) => Math.cot(operands[0]),
+        applyOperator: (operands) =>
+            Math.cos(operands[0]) / Math.sin(operands[0]),
     },
     abs: {
         representation: 'abs',
@@ -154,14 +155,14 @@ export const TOKEN_DETAILS = {
         numOperands: 2,
         type: TOKEN_TYPES.function,
         applyOperator: (operands) =>
-            Math.log(operands[0]) / Math.log(operands[1]),
+            Math.log(operands[1]) / Math.log(operands[0]),
     },
     ln: {
         representation: 'ln',
         precedence: 13,
         numOperands: 1,
         type: TOKEN_TYPES.function,
-        applyOperator: (operands) => Math.ln(operands[0]),
+        applyOperator: (operands) => Math.log(operands[0]),
     },
     sqrt: {
         representation: 'sqrt',
@@ -208,6 +209,27 @@ export function getMatchingString(regex, text, fromIndex) {
     return [buffer, index - fromIndex - 1];
 }
 
+export function preValidate(expression) {
+    if (!bracketsAreBalanced(expression))
+        throw new SyntaxError(`Parenthesis are mismatched`);
+}
+
+function bracketsAreBalanced(expression) {
+    const stack = [];
+    const characterArray = expression.split();
+    for (let character of characterArray) {
+        if (character === '(') {
+            stack.push(character);
+        } else if (character === ')') {
+            const value = stack.pop();
+            if (!value) return false;
+        }
+    }
+
+    if (stack.length > 0) return false;
+    else return true;
+}
+
 export function tokenize(expression) {
     const input = expression.replace(/\s/g, '');
     const tokens = [];
@@ -222,9 +244,18 @@ export function tokenize(expression) {
                 input,
                 index
             );
-            const value = Number.parseFloat(substring);
-            tokens.push(new Token(TOKEN_DETAILS.number, value));
-            index = index + jumpDistance;
+
+            if ((substring.match(/\./g) || []).length > 1) {
+                console.log;
+
+                throw new SyntaxError(
+                    `Too many decimal points in the number ${substring} at position ${index}`
+                );
+            } else {
+                const value = Number.parseFloat(substring);
+                tokens.push(new Token(TOKEN_DETAILS.number, value));
+                index = index + jumpDistance;
+            }
         } else if (currentChar.match(/[a-zA-Z]/g)) {
             // function
             const [substring, jumpDistance] = getMatchingString(
@@ -232,7 +263,13 @@ export function tokenize(expression) {
                 input,
                 index
             );
-            tokens.push(new Token(TOKEN_DETAILS[substring]));
+            if (TOKEN_DETAILS[substring]) {
+                tokens.push(new Token(TOKEN_DETAILS[substring]));
+            } else {
+                throw new SyntaxError(
+                    `Unexpected token ${substring} at position ${index}`
+                );
+            }
             index = index + jumpDistance;
         } else if (currentChar.match(/[\+-]/g)) {
             // possible unary + or -
@@ -250,8 +287,22 @@ export function tokenize(expression) {
         } else if (currentChar.match(/[\,\+\-\/\*\^\%\!\(\)]/g)) {
             // operator or parenthesis
             tokens.push(new Token(TOKEN_DETAILS[currentChar]));
+        } else {
+            throw new SyntaxError(
+                `Unexpected token ${currentChar} at position ${index}`
+            );
         }
     }
 
-    return tokens;
+    if (
+        tokens.at(-1).type !== TOKEN_TYPES.closeParenthesis &&
+        tokens.at(-1).type !== TOKEN_TYPES.operand &&
+        tokens.at(-1).type !== TOKEN_TYPES.postfixUnaryOperator
+    ) {
+        throw new SyntaxError(`Expression is incomplete`);
+    } else {
+        return tokens;
+    }
 }
+
+export function validateTokens(tokens) {}
